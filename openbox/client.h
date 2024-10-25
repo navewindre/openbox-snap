@@ -81,7 +81,10 @@ struct _ObClient
 
     /*! The window's decorations. NULL while the window is being managed! */
     struct _ObFrame *frame;
-
+    /*! The window is snapped to fill the left side of the screen */
+    gboolean snapped_left;
+    /*! The window is snapped to fill the right side of the screen */
+    gboolean snapped_right;
     /*! The number of unmap events to ignore on the window */
     gint ignore_unmaps;
 
