@@ -382,9 +382,13 @@ static void do_move(gboolean keyboard, gint keydist)
 
     screen_pointer_pos(&x, &y);
 
-    const Rect* a = screen_physical_area_active();
+    const Rect* a = screen_physical_area_all_monitors();
     gint h = RECT_BOTTOM(*a) - RECT_TOP(*a);
     gint w = RECT_RIGHT(*a) - RECT_LEFT(*a);
+
+    const Rect* cur_a = screen_physical_area_active();
+    gint a_h = RECT_BOTTOM(*cur_a) - RECT_TOP(*cur_a);
+    gint a_w = RECT_RIGHT(*cur_a) - RECT_LEFT(*cur_a);
 
     if (moveresize_client->max_horz && moveresize_client->max_vert && y > 0)
     {
@@ -437,12 +441,12 @@ static void do_move(gboolean keyboard, gint keydist)
     if (moveresize_client->snapped_left) {
         cur_x = 0;
         cur_y = 0;
-        cur_w = (w / 2) - 1;
+        cur_w = (a_w / 2) - 1;
     }
     else if (moveresize_client->snapped_right) {
-        cur_x = w / 2;
+        cur_x = w - a_w / 2;
         cur_y = 0;
-        cur_w = w / 2;
+        cur_w = a_w / 2;
     }
 
     client_configure(moveresize_client, cur_x, cur_y, cur_w, cur_h,
