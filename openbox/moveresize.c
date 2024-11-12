@@ -390,7 +390,7 @@ static void do_move(gboolean keyboard, gint keydist)
     gint a_h = RECT_BOTTOM(*cur_a) - RECT_TOP(*cur_a);
     gint a_w = RECT_RIGHT(*cur_a) - RECT_LEFT(*cur_a);
 
-    if (moveresize_client->max_horz && moveresize_client->max_vert && y > 0)
+    if (moveresize_client->max_horz && moveresize_client->max_vert && y > RECT_TOP(*cur_a))
     {
         client_maximize(moveresize_client, FALSE, 0);
         start_cx = 0;
@@ -402,7 +402,7 @@ static void do_move(gboolean keyboard, gint keydist)
         cur_w = moveresize_client->area.width;
         cur_h = moveresize_client->area.height;
     }
-    else if (y == 0 && !moveresize_client->snapped_left && !moveresize_client->snapped_right) {
+    else if (y == RECT_TOP(*cur_a) && !moveresize_client->snapped_left && !moveresize_client->snapped_right) {
         client_maximize(moveresize_client, TRUE, 0);
     }
     else if (x == 0 && !moveresize_client->snapped_left && !moveresize_client->max_horz && !moveresize_client->max_vert) {
